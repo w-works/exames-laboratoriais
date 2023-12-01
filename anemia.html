@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Anemia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="resultados.css">
+    
+
+
+    
+
+
+
+</head>
+<body>
+
+
+
+    <div id="causas">
+        <ul>
+            <li onclick='exibirLembrete("Anemia (frequente)", "A anemia é uma condição comum que resulta na redução do número de glóbulos vermelhos ou na quantidade de hemoglobina no sangue.")'>Anemia (frequente)</li>
+            <li onclick='exibirLembrete("Estágio avançado de gestação", "Durante o estágio avançado de gestação, o volume sanguíneo pode aumentar, diluindo a concentração de células sanguíneas.")'>Estágio avançado de gestação</li>
+            <li onclick='exibirLembrete("Tranquilização e Anestesia", "Alguns medicamentos utilizados para tranquilização ou anestesia podem afetar o hematócrito.")'>Tranquilização e Anestesia</li>
+            <li onclick='exibirLembrete("Hemólise durante ou após a coleta", "A hemólise, que é a ruptura das células sanguíneas, pode ocorrer durante ou após a coleta de sangue, afetando os resultados.\nErros: excesso de EDTA; diluição; coágulos; contadores eletrônicos")'>Hemólise durante ou após a coleta</li>
+        </ul>
+    </div>
+
+    <div id="lembrete">
+        <div id="fechar-lembrete" onclick="fecharLembrete()">X</div>
+        <p id="lembrete-conteudo"></p>
+    </div>
+
+    <script src="resultados.js"></script>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

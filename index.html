@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exames Laboratoriais</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="background-color">
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <h1 style="text-align: center; margin-bottom: 10px;">
+                Exames Laboratoriais de Cães e Gatos
+            </h1>
+        </div>
+
+        <div id="caixapesquisa">
+            <input type="text" class="search-box" placeholder="Pesquise por Causas">
+            <button class="search-button-box" onclick="pesquisar()">
+                <img src="https://img.icons8.com/android/24/000000/search.png" alt="Ícone de lupa" />
+            </button>
+        </div>
+
+        <div class="search-container">
+            <div class="buttons-container">
+                <button class="search-button" data-tipo="Hemograma" onclick="selecionarTipo('Hemograma')">Hemograma</button>
+                <button class="search-button" data-tipo="Bioquímico" onclick="selecionarTipo('Bioquímico')">Bioquímico</button>
+                <button class="search-button" data-tipo="Urinálise" onclick="selecionarTipo('Urinálise')">Urinálise</button>
+            </div>
+
+            <select id="selecao" name="selecao">
+                <option value="" disabled selected hidden>Selecione um Parâmetro</option>
+            </select>
+
+            <select id="selecao2" name="selecao2">
+                <option value="" disabled selected hidden>Selecione uma Categoria</option>
+            </select>
+
+            <select id="selecao3" name="selecao3">
+                <option value="" disabled selected hidden>Selecione um Exame</option>
+            </select>
+        </div>
+        
+        
+        <div id="espaço-exibir-pagina"></div>
+      
+
+    </div>
+
+    <script src="scripts.js"></script>
+    <script src="exibirpagina.js"></script>
+</body>
+
+</html>
