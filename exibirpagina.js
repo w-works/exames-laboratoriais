@@ -1,6 +1,6 @@
 const selecao2 = document.getElementById('selecao2')
 const selecao3 = document.getElementById('selecao3')
-const espacoExibirPagina = document.getElementById('espaço-exibir-pagina')
+const espacoExibirPagina = document.getElementById('espaco-exibir-pagina')
 
 const loadPage = async (page) => {
   // lê o conteúdo da página
