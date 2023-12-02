@@ -18,11 +18,14 @@ const loadPage = async (page) => {
 async function verificarSelecao() {
   if (selecao2.value === 'Hemácias' && selecao3.value === 'Diminuído') {
     await loadPage('anemia-hemacias.html')
+  } else if (selecao2.value === 'Hemácias' && selecao3.value === 'Aumentado') {
+    await loadPage('eritrocitose-hemacias.html')
   } else {
     espacoExibirPagina.innerHTML = ''
     document.querySelectorAll('head script').forEach((scrpt) => scrpt.parentNode.removeChild(scrpt))
   }
 }
+
 
 selecao2.addEventListener('change', verificarSelecao)
 selecao3.addEventListener('change', verificarSelecao)
