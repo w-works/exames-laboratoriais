@@ -17,7 +17,7 @@ const loadPage = async (page) => {
 
 async function verificarSelecao() {
   if (selecao2.value === 'Hemácias' && selecao3.value === 'Diminuído') {
-    await loadPage('anemia.html')
+    await loadPage('anemia-hemacias.html')
   } else {
     espacoExibirPagina.innerHTML = ''
     document.querySelectorAll('head script').forEach((scrpt) => scrpt.parentNode.removeChild(scrpt))

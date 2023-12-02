@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="resultados.css">
+
+<div id="causas">
+  <h2>CAUSAS DE ANEMIA</h2>
+  <ul>
+    <li onclick='exibirLembrete("Anemia", "A desidratação pode mascarar a presença de uma anemia discreta.")'>
+      Anemia</li>
+    <li onclick='exibirLembrete("Estágio Avançado de Gestação", "Durante a gestação, observa-se uma diminuição gradual na contagem de hemácias, atingindo valores mínimos no momento do parto. Esses valores retornam aos níveis pré-gestacionais após 8 a 9 semanas em cadelas e 1 semana em gatas. Esse processo é acompanhado por uma reticulocitose mais pronunciada nas fases finais da gestação e no pós-parto, especialmente em gatas.")'>
+      Estágio Avançado de Gestação</li>
+    <li onclick='exibirLembrete("Tranquilização e Sedação", "Podem diminuir a contagem de hemácias transferindo-as da circulação para o baço.")'>
+      Tranquilização e Sedação</li>
+    <li onclick='exibirLembrete("Hemólise (geralmente durante/após a coleta)", "A ocorrência pode ser atribuída a uma doença, frequentemente causadora de anemia hemolítica, mas é mais provável que se origine de práticas inadequadas de coleta e/ou armazenamento. Uma hemólise considerável é necessária para provocar uma diminuição significativa na contagem de hemácias. Na presença de hemólise, a Concentração de Hemoglobina Corpuscular Média (CHCM) pode mostrar uma elevação falsa, mesmo que isso seja impossível. Nesse contexto, a única medida eritrocitária precisa é a determinação da hemoglobina.")'>
+      Hemólise (geralmente durante/após a coleta)</li>
+  </ul>
+</div>
+
+<div id="lembrete">
+  <div id="fechar-lembrete" onclick="fecharLembrete()">X</div>
+  <p id="lembrete-conteudo"></p>
+</div>
+
+<script src="resultados.js"></script>
