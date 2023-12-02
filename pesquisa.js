@@ -3,32 +3,22 @@ function pesquisar() {
     var espacoExibirPagina = document.getElementById('espaco-exibir-pagina');
     espacoExibirPagina.innerHTML = "";
 
-    // Verifica se o termo de pesquisa está vazio
     if (termoPesquisa.trim() === "") {
         espacoExibirPagina.innerHTML = '<p class="resultado">Digite uma causa na caixa de pesquisa</p>';
         return;
     }
 
-    // Restante do código para realizar a pesquisa...
-    // (mantenha o restante do código após essa verificação)
-
-
-
-
-
-    // Função para carregar conteúdo de uma página
     function carregarConteudoPagina(pagina) {
         return fetch(pagina).then(response => response.text());
     }
 
-    // Realizar a pesquisa nas páginas
     Promise.all([
         carregarConteudoPagina('anemia-hemacias.html'),
         carregarConteudoPagina('eritrocitose-hemacias.html')
     ]).then(resultados => {
-        var tituloEncontrado = null;
+        var resultadosEncontrados = [];
 
-        resultados.forEach(html => {
+        resultados.forEach((html, index) => {
             var div = document.createElement('div');
             div.innerHTML = html;
             var causas = div.querySelectorAll('#causas li');
@@ -36,46 +26,82 @@ function pesquisar() {
             causas.forEach(causa => {
                 var causaTexto = causa.textContent.toLowerCase();
                 if (causaTexto.includes(termoPesquisa)) {
-                    // Obter apenas o título sem "Causas de"
-                    tituloEncontrado = div.querySelector('h2').textContent.replace("Causas de ", "").trim();
+                    var tituloEncontrado = div.querySelector('h2').textContent.replace("Causas de ", "").trim();
+                    var lembreteEncontrado = causa.getAttribute('onclick').match(/exibirLembrete\(".*",\s*"(.*)"\)/)[1];
+
+                    // Verifica se o resultado já foi adicionado
+                    var resultadoExistente = resultadosEncontrados.find(resultado => resultado.titulo === tituloEncontrado);
+                    if (!resultadoExistente) {
+                        resultadosEncontrados.push({ titulo: tituloEncontrado, lembrete: lembreteEncontrado });
+
+                        // Adiciona o resultado ao espacoExibirPagina
+                        var palavras = tituloEncontrado.split(/\s+/);
+                        var termoExibido = palavras[palavras.length - 1].trim();
+                        termoExibido = termoExibido.charAt(0).toUpperCase() + termoExibido.slice(1).toLowerCase();
+
+                        var resultadoElemento = document.createElement('p');
+                        resultadoElemento.classList.add('resultado-pagina');
+                        resultadoElemento.textContent = termoExibido;
+                        espacoExibirPagina.appendChild(resultadoElemento);
+
+                        resultadoElemento.style.fontFamily = 'Arial, sans-serif';
+                        resultadoElemento.style.textAlign = 'left';
+                        resultadoElemento.style.backgroundColor = '#ffffff';
+                        resultadoElemento.style.borderRadius = '8px';
+                        resultadoElemento.style.padding = '12px';
+                        resultadoElemento.style.marginBottom = '12px';
+                        resultadoElemento.style.cursor = 'pointer';
+                        resultadoElemento.style.color = '#333';
+                        resultadoElemento.style.fontSize = '16px';
+
+                        resultadoElemento.addEventListener('click', function() {
+                            var lembreteElemento = document.createElement('div');
+                            lembreteElemento.id = 'lembrete';
+                            lembreteElemento.innerHTML = `
+                                <div id="fechar-lembrete" onclick="fecharLembrete()">Fechar (X)</div>
+                                <p id="lembrete-conteudo">${lembreteEncontrado}</p>
+                            `;
+                            espacoExibirPagina.appendChild(lembreteElemento);
+
+                            lembreteElemento.style.display = 'block';
+                            lembreteElemento.style.fontFamily = 'Arial, sans-serif';
+                            lembreteElemento.style.textAlign = 'center';
+                            lembreteElemento.style.backgroundColor = '#333';
+                            lembreteElemento.style.color = '#fff';
+                            lembreteElemento.style.fontSize = '14px';
+                            lembreteElemento.style.padding = '20px';
+                            lembreteElemento.style.position = 'absolute';
+                            lembreteElemento.style.top = '50%';
+                            lembreteElemento.style.left = '50%';
+                            lembreteElemento.style.transform = 'translate(-50%, -50%)';
+                            lembreteElemento.style.borderRadius = '10px';
+                            lembreteElemento.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
+                            lembreteElemento.style.zIndex = '999';
+                            lembreteElemento.style.maxWidth = '400px';
+
+                            var fecharLembreteElemento = document.getElementById('fechar-lembrete');
+                            if (fecharLembreteElemento) {
+                                fecharLembreteElemento.style.cursor = 'pointer';
+                            }
+
+                            fecharLembreteElemento.addEventListener('click', fecharLembrete);
+                        });
+                    }
                 }
             });
         });
 
-        if (tituloEncontrado) {
-            // Divide o título usando espaços como delimitadores
-            var palavras = tituloEncontrado.split(/\s+/);
-        
-            // Obtém a última palavra, que deve conter o termo desejado
-            var termoExibido = palavras[palavras.length - 1].trim();
-        
-            // Coloca a primeira letra da palavra em maiúscula
-            termoExibido = termoExibido.charAt(0).toUpperCase() + termoExibido.slice(1).toLowerCase();
-        
-            var resultadoElemento = document.createElement('p');
-            resultadoElemento.classList.add('resultado-pagina');
-            resultadoElemento.textContent = termoExibido;
-            espacoExibirPagina.appendChild(resultadoElemento);
-
-
-            resultadoElemento.style.fontFamily = 'Arial, sans-serif';
-    resultadoElemento.style.textAlign = 'left';
-    resultadoElemento.style.backgroundColor = '#ffffff';
-    resultadoElemento.style.borderRadius = '8px';
-    resultadoElemento.style.padding = '12px';
-    resultadoElemento.style.marginBottom = '12px';
-    resultadoElemento.style.cursor = 'pointer';
-    resultadoElemento.style.color = '#333';
-    resultadoElemento.style.fontSize = '16px';
-        
-            // Aplicar o estilo do CSS
-            adicionarEstiloCSS();
-        } else {
+        if (resultadosEncontrados.length === 0) {
             espacoExibirPagina.innerHTML = '<p class="resultado">Nenhum resultado encontrado para: ' + termoPesquisa + '</p>';
         }
-        
-        
     }).catch(error => {
         console.error('Erro ao carregar conteúdo das páginas', error);
     });
+}
+
+function fecharLembrete() {
+    var lembreteElemento = document.getElementById('lembrete');
+    if (lembreteElemento) {
+        lembreteElemento.parentNode.removeChild(lembreteElemento);
+    }
 }

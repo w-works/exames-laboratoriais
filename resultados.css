@@ -52,12 +52,12 @@ h2 {
 }
 
 #fechar-lembrete {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+    text-align: center;
     cursor: pointer;
-    color: #ccc;
-}
+    padding: 10px; 
+    margin: 0 auto; 
+    width: fit-content;
+  }
 
 #fechar-lembrete:hover {
     color: #fff;
