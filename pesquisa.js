@@ -20,7 +20,9 @@ function pesquisar() {
         carregarConteudoPagina('anemia-hemacias.html'),
         carregarConteudoPagina('eritrocitose-hemacias.html'),
         carregarConteudoPagina('anemia-hemoglobina.html'),  
-        carregarConteudoPagina('eritrocitose-hemoglobina.html')
+        carregarConteudoPagina('eritrocitose-hemoglobina.html'),
+        carregarConteudoPagina('anemia-hematocrito.html'),  
+        carregarConteudoPagina('eritrocitose-hematocrito.html')
 
     ]).then(resultados => {
         var resultadosEncontrados = [];
@@ -134,7 +136,9 @@ function buscarSugestoes() {
         carregarConteudoPagina('anemia-hemacias.html'),
         carregarConteudoPagina('eritrocitose-hemacias.html'),
         carregarConteudoPagina('anemia-hemoglobina.html'),  
-        carregarConteudoPagina('eritrocitose-hemoglobina.html')
+        carregarConteudoPagina('eritrocitose-hemoglobina.html'),
+        carregarConteudoPagina('anemia-hematocrito.html'),  
+        carregarConteudoPagina('eritrocitose-hematocrito.html')
           
     ]).then(resultados => {
 

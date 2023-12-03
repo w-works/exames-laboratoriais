@@ -63,6 +63,8 @@
                 adicionarOpcao(selecao2, 'Hemácias');
                 adicionarOpcao(selecao2, 'Hemoglobina');
                 adicionarOpcao(selecao2, 'Hematócrito');
+                adicionarOpcao(selecao2, 'Volume Corpuscular Médio (VCM)');
+                adicionarOpcao(selecao2, 'Concentração de Hemoglobina Corpuscular Média (CHCM)');
                 break;
             case 'Leucograma':
                 adicionarOpcao(selecao2, 'Selecione');
@@ -168,6 +170,8 @@
             case 'Hemácias':
             case 'Hemoglobina':
             case 'Hematócrito':
+            case 'Volume Corpuscular Médio (VCM)':
+            case 'Concentração de Hemoglobina Corpuscular Média (CHCM)':
             case 'Leucócitos':
             case 'Neutrófilos':
             case 'Bastonetes':

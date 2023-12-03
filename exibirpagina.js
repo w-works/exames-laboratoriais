@@ -26,6 +26,11 @@ async function verificarSelecao() {
   } else if (selecao2.value === 'Hemoglobina' && selecao3.value === 'Aumentado') {
     await loadPage('eritrocitose-hemoglobina.html')
 
+  } else if (selecao2.value === 'Hematócrito' && selecao3.value === 'Diminuído') {
+    await loadPage('anemia-hematocrito.html')
+  } else if (selecao2.value === 'Hematócrito' && selecao3.value === 'Aumentado') {
+    await loadPage('eritrocitose-hematocrito.html')
+
   } else {
     espacoExibirPagina.innerHTML = ''
     document.querySelectorAll('head script').forEach((scrpt) => scrpt.parentNode.removeChild(scrpt))
