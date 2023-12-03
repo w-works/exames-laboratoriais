@@ -18,7 +18,10 @@ function pesquisar() {
 
     Promise.all([
         carregarConteudoPagina('anemia-hemacias.html'),
-        carregarConteudoPagina('eritrocitose-hemacias.html')
+        carregarConteudoPagina('eritrocitose-hemacias.html'),
+        carregarConteudoPagina('anemia-hemoglobina.html'),  
+        carregarConteudoPagina('eritrocitose-hemoglobina.html')
+
     ]).then(resultados => {
         var resultadosEncontrados = [];
 
@@ -125,11 +128,15 @@ function buscarSugestoes() {
         return fetch(pagina).then(response => response.text());
     }
 
+    var sugestoesEncontradas = [];
+
     Promise.all([
         carregarConteudoPagina('anemia-hemacias.html'),
-        carregarConteudoPagina('eritrocitose-hemacias.html')
+        carregarConteudoPagina('eritrocitose-hemacias.html'),
+        carregarConteudoPagina('anemia-hemoglobina.html'),  
+        carregarConteudoPagina('eritrocitose-hemoglobina.html')
+          
     ]).then(resultados => {
-        var sugestoesEncontradas = [];
 
         resultados.forEach(html => {
             var div = document.createElement('div');
@@ -141,13 +148,16 @@ function buscarSugestoes() {
 
                 palavrasChave.forEach(palavra => {
                     var palavraFormatada = palavra.trim();
-                    if (palavraFormatada.toLowerCase().startsWith(termoPesquisa)) {
+                    if (palavraFormatada.toLowerCase().startsWith(termoPesquisa) &&
+                        sugestoesEncontradas.indexOf(palavraFormatada) === -1) {
                         sugestoesEncontradas.push(palavraFormatada);
                     }
                 });
             });
         });
 
+        sugestoesEncontradas.sort(); 
+        
         if (sugestoesEncontradas.length > 0) {
             sugestoesEncontradas.forEach(sugestao => {
                 var sugestaoElemento = document.createElement('p');

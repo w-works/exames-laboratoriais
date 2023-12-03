@@ -20,6 +20,12 @@ async function verificarSelecao() {
     await loadPage('anemia-hemacias.html')
   } else if (selecao2.value === 'Hemácias' && selecao3.value === 'Aumentado') {
     await loadPage('eritrocitose-hemacias.html')
+
+  } else if (selecao2.value === 'Hemoglobina' && selecao3.value === 'Diminuído') {
+    await loadPage('anemia-hemoglobina.html')
+  } else if (selecao2.value === 'Hemoglobina' && selecao3.value === 'Aumentado') {
+    await loadPage('eritrocitose-hemoglobina.html')
+
   } else {
     espacoExibirPagina.innerHTML = ''
     document.querySelectorAll('head script').forEach((scrpt) => scrpt.parentNode.removeChild(scrpt))
