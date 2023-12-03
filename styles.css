@@ -38,6 +38,13 @@ body {
   margin-bottom: 20px;
 }
 
+#espaco-exibir-sugestao {
+    padding: 5px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
 
 .selected-button {
     background-color: #3498db;

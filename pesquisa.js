@@ -105,3 +105,85 @@ function fecharLembrete() {
         lembreteElemento.parentNode.removeChild(lembreteElemento);
     }
 }
+
+
+function buscarSugestoes() {
+    var termoPesquisa = document.querySelector('.search-box').value.toLowerCase();
+    var espacoExibirSugestao = document.getElementById('espaco-exibir-sugestao');
+    espacoExibirSugestao.innerHTML = "";
+
+    if (termoPesquisa.trim() === "") {
+        return;
+    }
+
+    function carregarConteudoPagina(pagina) {
+        return fetch(pagina).then(response => response.text());
+    }
+
+    Promise.all([
+        carregarConteudoPagina('anemia-hemacias.html'),
+        carregarConteudoPagina('eritrocitose-hemacias.html')
+    ]).then(resultados => {
+        var sugestoesEncontradas = [];
+
+        resultados.forEach(html => {
+            var div = document.createElement('div');
+            div.innerHTML = html;
+            var causas = div.querySelectorAll('#causas li');
+
+            causas.forEach(causa => {
+                var causaTexto = causa.textContent.toLowerCase();
+                var palavrasCausa = causaTexto.split(/\s+/);
+
+                // Verifica se alguma palavra da causa inicia com o termo de pesquisa
+                var encontrada = palavrasCausa.some(palavra => palavra.startsWith(termoPesquisa));
+                
+                if (encontrada) {
+                    sugestoesEncontradas.push(causaTexto);
+                }
+            });
+        });
+
+        if (sugestoesEncontradas.length > 0) {
+            sugestoesEncontradas.forEach(sugestao => {
+                var sugestaoElemento = document.createElement('p');
+                sugestaoElemento.textContent = sugestao;
+                espacoExibirSugestao.appendChild(sugestaoElemento);
+
+                sugestaoElemento.addEventListener('click', function() {
+                    // Preenche a caixa de pesquisa com a sugestão selecionada
+                    document.querySelector('.search-box').value = sugestao;
+
+                    // Limpa o espaço de sugestões após a seleção
+                    espacoExibirSugestao.innerHTML = "";
+
+                    document.querySelector('.botao-pesquisa').addEventListener('click', function () {
+                        exibirResultados = true; // Configura a variável para true quando o botão de pesquisa é clicado
+                        pesquisar();
+                    });
+                    
+                });
+            });
+        } else {
+            // Se não houver sugestões, exibe a mensagem adequada
+            var mensagem = document.createElement('p');
+            mensagem.textContent = 'Nenhuma sugestão encontrada para: ' + termoPesquisa;
+            espacoExibirSugestao.appendChild(mensagem);
+        }
+    }).catch(error => {
+        console.error('Erro ao carregar conteúdo das páginas', error);
+    });
+}
+
+
+
+// Adicionando funcionalidade de sugestões durante a digitação
+document.querySelector('.search-box').addEventListener('input', function() {
+    buscarSugestoes();
+});
+
+function limparPesquisa() {
+    document.querySelector('.search-box').value = '';
+    document.getElementById('espaco-exibir-pagina').innerHTML = '';
+    document.getElementById('espaco-exibir-sugestao').innerHTML = '';
+}
