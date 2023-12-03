@@ -3,10 +3,14 @@ function pesquisar() {
     var espacoExibirPagina = document.getElementById('espaco-exibir-pagina');
     espacoExibirPagina.innerHTML = "";
 
-    if (termoPesquisa.trim() === "") {
-        espacoExibirPagina.innerHTML = '<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">Digite uma causa na caixa de pesquisa</p>';
+    if (termoPesquisa.trim().length < 3) {
+        espacoExibirPagina.innerHTML = '<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">A pesquisa deve conter pelo menos 3 caracteres</p>';
         return;
     }
+
+    var tituloElemento = document.createElement('p');
+    var termoPesquisaMaiusculo = termoPesquisa.toUpperCase();
+    tituloElemento.innerHTML = `<strong style="font-size: 16px; margin-top: 10px; margin-left: 10px; color: #000000;">ALTERAÇÕES DEVIDO A ${termoPesquisaMaiusculo}</strong>`;
 
     function carregarConteudoPagina(pagina) {
         return fetch(pagina).then(response => response.text());
@@ -32,12 +36,6 @@ function pesquisar() {
                     var resultadoExistente = resultadosEncontrados.find(resultado => resultado.titulo === tituloEncontrado);
                     if (!resultadoExistente) {
                         resultadosEncontrados.push({ titulo: tituloEncontrado, lembrete: lembreteEncontrado });
-
-                        var tituloElemento = document.createElement('p');
-                        var termoPesquisaMaiusculo = termoPesquisa.toUpperCase();
-                        tituloElemento.innerHTML = `<strong style="font-size: 16px; margin-top: 10px; margin-left: 10px; color: #000000;">ALTERAÇÕES DEVIDO A ${termoPesquisa.toUpperCase()}</strong>`;
-
-                        espacoExibirPagina.appendChild(tituloElemento);
 
                         var palavras = tituloEncontrado.split(/\s+/);
                         var termoExibido = palavras[palavras.length - 1].trim();
@@ -98,7 +96,9 @@ function pesquisar() {
         });
 
         if (resultadosEncontrados.length === 0) {
-            espacoExibirPagina.innerHTML = `<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">Nenhum resultado encontrado para: ${termoPesquisa}</p>`;
+            espacoExibirPagina.innerHTML += `<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">Nenhum resultado encontrado para: ${termoPesquisa}</p>`;
+        } else {
+            espacoExibirPagina.insertBefore(tituloElemento, espacoExibirPagina.firstChild);
         }
     }).catch(error => {
         console.error('Erro ao carregar conteúdo das páginas', error);
