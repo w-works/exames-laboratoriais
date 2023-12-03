@@ -29,12 +29,10 @@ function pesquisar() {
                     var tituloEncontrado = div.querySelector('h2').textContent.replace("Causas de ", "").trim();
                     var lembreteEncontrado = causa.getAttribute('onclick').match(/exibirLembrete\(".*",\s*"(.*)"\)/)[1];
 
-                    // Verifica se o resultado já foi adicionado
                     var resultadoExistente = resultadosEncontrados.find(resultado => resultado.titulo === tituloEncontrado);
                     if (!resultadoExistente) {
                         resultadosEncontrados.push({ titulo: tituloEncontrado, lembrete: lembreteEncontrado });
 
-                        // Adiciona o resultado ao espacoExibirPagina
                         var palavras = tituloEncontrado.split(/\s+/);
                         var termoExibido = palavras[palavras.length - 1].trim();
                         termoExibido = termoExibido.charAt(0).toUpperCase() + termoExibido.slice(1).toLowerCase();
@@ -106,7 +104,6 @@ function fecharLembrete() {
     }
 }
 
-
 function buscarSugestoes() {
     var termoPesquisa = document.querySelector('.search-box').value.toLowerCase();
     var espacoExibirSugestao = document.getElementById('espaco-exibir-sugestao');
@@ -129,18 +126,16 @@ function buscarSugestoes() {
         resultados.forEach(html => {
             var div = document.createElement('div');
             div.innerHTML = html;
-            var causas = div.querySelectorAll('#causas li');
+            var causas = div.querySelectorAll('[data-palavras-chave]');
 
             causas.forEach(causa => {
-                var causaTexto = causa.textContent.toLowerCase();
-                var palavrasCausa = causaTexto.split(/\s+/);
+                var palavrasChave = causa.getAttribute('data-palavras-chave').toLowerCase().split(';');
 
-                // Verifica se alguma palavra da causa inicia com o termo de pesquisa
-                var encontrada = palavrasCausa.some(palavra => palavra.startsWith(termoPesquisa));
-                
-                if (encontrada) {
-                    sugestoesEncontradas.push(causaTexto);
-                }
+                palavrasChave.forEach(palavra => {
+                    if (palavra.startsWith(termoPesquisa)) {
+                        sugestoesEncontradas.push(palavra);
+                    }
+                });
             });
         });
 
@@ -151,21 +146,16 @@ function buscarSugestoes() {
                 espacoExibirSugestao.appendChild(sugestaoElemento);
 
                 sugestaoElemento.addEventListener('click', function() {
-                    // Preenche a caixa de pesquisa com a sugestão selecionada
                     document.querySelector('.search-box').value = sugestao;
-
-                    // Limpa o espaço de sugestões após a seleção
                     espacoExibirSugestao.innerHTML = "";
 
                     document.querySelector('.botao-pesquisa').addEventListener('click', function () {
-                        exibirResultados = true; // Configura a variável para true quando o botão de pesquisa é clicado
+                        exibirResultados = true;
                         pesquisar();
                     });
-                    
                 });
             });
         } else {
-            // Se não houver sugestões, exibe a mensagem adequada
             var mensagem = document.createElement('p');
             mensagem.textContent = 'Nenhuma sugestão encontrada para: ' + termoPesquisa;
             espacoExibirSugestao.appendChild(mensagem);
@@ -175,9 +165,6 @@ function buscarSugestoes() {
     });
 }
 
-
-
-// Adicionando funcionalidade de sugestões durante a digitação
 document.querySelector('.search-box').addEventListener('input', function() {
     buscarSugestoes();
 });
