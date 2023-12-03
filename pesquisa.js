@@ -156,8 +156,7 @@ function buscarSugestoes() {
 
                 sugestaoElemento.addEventListener('click', function () {
                     document.querySelector('.search-box').value = sugestao;
-
-                    espacoExibirSugestao.innerHTML = "";
+                    pesquisar();
                 });
 
                 sugestaoElemento.style.fontFamily = 'Arial, sans-serif';
@@ -171,7 +170,6 @@ function buscarSugestoes() {
                 sugestaoElemento.style.fontSize = '16px';
                 sugestaoElemento.style.marginLeft = '8px';
                 sugestaoElemento.style.marginRight = '8px';
-
             });
         } else {
             var mensagem = document.createElement('p');
@@ -187,6 +185,7 @@ function buscarSugestoes() {
         console.error('Erro ao carregar conteúdo das páginas', error);
     });
 }
+
 
 document.querySelector('.search-box').addEventListener('input', function () {
     buscarSugestoes();
