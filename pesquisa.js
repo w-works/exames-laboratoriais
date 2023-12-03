@@ -157,6 +157,8 @@ function buscarSugestoes() {
                 sugestaoElemento.addEventListener('click', function () {
                     document.querySelector('.search-box').value = sugestao;
                     pesquisar();
+
+                    espacoExibirSugestao.innerHTML = "";
                 });
 
                 sugestaoElemento.style.fontFamily = 'Arial, sans-serif';
@@ -195,4 +197,7 @@ function limparPesquisa() {
     document.querySelector('.search-box').value = '';
     document.getElementById('espaco-exibir-pagina').innerHTML = '';
     document.getElementById('espaco-exibir-sugestao').innerHTML = '';
+    
+    window.location.href = window.location.origin + window.location.pathname;
 }
+
