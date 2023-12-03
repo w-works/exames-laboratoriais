@@ -4,7 +4,7 @@ function pesquisar() {
     espacoExibirPagina.innerHTML = "";
 
     if (termoPesquisa.trim() === "") {
-        espacoExibirPagina.innerHTML = '<p class="resultado">Digite uma causa na caixa de pesquisa</p>';
+        espacoExibirPagina.innerHTML = '<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">Digite uma causa na caixa de pesquisa</p>';
         return;
     }
 
@@ -33,6 +33,12 @@ function pesquisar() {
                     if (!resultadoExistente) {
                         resultadosEncontrados.push({ titulo: tituloEncontrado, lembrete: lembreteEncontrado });
 
+                        var tituloElemento = document.createElement('p');
+                        var termoPesquisaMaiusculo = termoPesquisa.toUpperCase();
+                        tituloElemento.innerHTML = `<strong style="font-size: 16px; margin-top: 10px; margin-left: 10px; color: #000000;">ALTERAÇÕES DEVIDO A ${termoPesquisa.toUpperCase()}</strong>`;
+
+                        espacoExibirPagina.appendChild(tituloElemento);
+
                         var palavras = tituloEncontrado.split(/\s+/);
                         var termoExibido = palavras[palavras.length - 1].trim();
                         termoExibido = termoExibido.charAt(0).toUpperCase() + termoExibido.slice(1).toLowerCase();
@@ -49,10 +55,12 @@ function pesquisar() {
                         resultadoElemento.style.padding = '12px';
                         resultadoElemento.style.marginBottom = '12px';
                         resultadoElemento.style.cursor = 'pointer';
-                        resultadoElemento.style.color = '#333';
+                        resultadoElemento.style.color = '#000000';
                         resultadoElemento.style.fontSize = '16px';
+                        resultadoElemento.style.marginLeft = '8px';
+                        resultadoElemento.style.marginRight = '8px';
 
-                        resultadoElemento.addEventListener('click', function() {
+                        resultadoElemento.addEventListener('click', function () {
                             var lembreteElemento = document.createElement('div');
                             lembreteElemento.id = 'lembrete';
                             lembreteElemento.innerHTML = `
@@ -64,7 +72,7 @@ function pesquisar() {
                             lembreteElemento.style.display = 'block';
                             lembreteElemento.style.fontFamily = 'Arial, sans-serif';
                             lembreteElemento.style.textAlign = 'center';
-                            lembreteElemento.style.backgroundColor = '#333';
+                            lembreteElemento.style.backgroundColor = '#000000';
                             lembreteElemento.style.color = '#fff';
                             lembreteElemento.style.fontSize = '14px';
                             lembreteElemento.style.padding = '20px';
@@ -90,7 +98,7 @@ function pesquisar() {
         });
 
         if (resultadosEncontrados.length === 0) {
-            espacoExibirPagina.innerHTML = '<p class="resultado">Nenhum resultado encontrado para: ' + termoPesquisa + '</p>';
+            espacoExibirPagina.innerHTML = `<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">Nenhum resultado encontrado para: ${termoPesquisa}</p>`;
         }
     }).catch(error => {
         console.error('Erro ao carregar conteúdo das páginas', error);
@@ -146,7 +154,7 @@ function buscarSugestoes() {
                 sugestaoElemento.textContent = sugestao.charAt(0).toUpperCase() + sugestao.slice(1).toLowerCase();
                 espacoExibirSugestao.appendChild(sugestaoElemento);
 
-                sugestaoElemento.addEventListener('click', function() {
+                sugestaoElemento.addEventListener('click', function () {
                     document.querySelector('.search-box').value = sugestao;
 
                     espacoExibirSugestao.innerHTML = "";
@@ -159,12 +167,20 @@ function buscarSugestoes() {
                 sugestaoElemento.style.padding = '12px';
                 sugestaoElemento.style.marginBottom = '12px';
                 sugestaoElemento.style.cursor = 'pointer';
-                sugestaoElemento.style.color = '#333';
+                sugestaoElemento.style.color = '#000000';
                 sugestaoElemento.style.fontSize = '16px';
+                sugestaoElemento.style.marginLeft = '8px';
+                sugestaoElemento.style.marginRight = '8px';
+
             });
         } else {
             var mensagem = document.createElement('p');
             mensagem.textContent = 'Nenhuma sugestão encontrada para: ' + termoPesquisa;
+            mensagem.style.textAlign = 'center';
+            mensagem.style.fontWeight = 'bold';
+            mensagem.style.textTransform = 'uppercase';
+            mensagem.style.color = 'red';
+            mensagem.style.fontSize = '14px';
             espacoExibirSugestao.appendChild(mensagem);
         }
     }).catch(error => {
@@ -172,7 +188,7 @@ function buscarSugestoes() {
     });
 }
 
-document.querySelector('.search-box').addEventListener('input', function() {
+document.querySelector('.search-box').addEventListener('input', function () {
     buscarSugestoes();
 });
 
