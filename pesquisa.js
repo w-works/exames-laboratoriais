@@ -129,11 +129,12 @@ function buscarSugestoes() {
             var causas = div.querySelectorAll('[data-palavras-chave]');
 
             causas.forEach(causa => {
-                var palavrasChave = causa.getAttribute('data-palavras-chave').toLowerCase().split(';');
+                var palavrasChave = causa.getAttribute('data-palavras-chave').split(';');
 
                 palavrasChave.forEach(palavra => {
-                    if (palavra.startsWith(termoPesquisa)) {
-                        sugestoesEncontradas.push(palavra);
+                    var palavraFormatada = palavra.trim();
+                    if (palavraFormatada.toLowerCase().startsWith(termoPesquisa)) {
+                        sugestoesEncontradas.push(palavraFormatada);
                     }
                 });
             });
@@ -142,18 +143,24 @@ function buscarSugestoes() {
         if (sugestoesEncontradas.length > 0) {
             sugestoesEncontradas.forEach(sugestao => {
                 var sugestaoElemento = document.createElement('p');
-                sugestaoElemento.textContent = sugestao;
+                sugestaoElemento.textContent = sugestao.charAt(0).toUpperCase() + sugestao.slice(1).toLowerCase();
                 espacoExibirSugestao.appendChild(sugestaoElemento);
 
                 sugestaoElemento.addEventListener('click', function() {
                     document.querySelector('.search-box').value = sugestao;
-                    espacoExibirSugestao.innerHTML = "";
 
-                    document.querySelector('.botao-pesquisa').addEventListener('click', function () {
-                        exibirResultados = true;
-                        pesquisar();
-                    });
+                    espacoExibirSugestao.innerHTML = "";
                 });
+
+                sugestaoElemento.style.fontFamily = 'Arial, sans-serif';
+                sugestaoElemento.style.textAlign = 'left';
+                sugestaoElemento.style.backgroundColor = '#ffffff';
+                sugestaoElemento.style.borderRadius = '8px';
+                sugestaoElemento.style.padding = '12px';
+                sugestaoElemento.style.marginBottom = '12px';
+                sugestaoElemento.style.cursor = 'pointer';
+                sugestaoElemento.style.color = '#333';
+                sugestaoElemento.style.fontSize = '16px';
             });
         } else {
             var mensagem = document.createElement('p');
