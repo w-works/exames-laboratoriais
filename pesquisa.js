@@ -1,7 +1,68 @@
+document.querySelector('.search-box').addEventListener('click', function () {
+    limparCampos();
+    deselecionarBotoes();
+    resetarSelecoes();
+    permitirEntradaTexto();
+});
+
+function deselecionarBotoes() {
+    var botoes = document.querySelectorAll('.search-button');
+
+    botoes.forEach(function (botao) {
+        botao.classList.remove('selected-button');
+    });
+
+    tipoSelecionado = '';
+}
+
+function limparCampos() {
+    document.querySelector('.search-box').value = '';
+    document.getElementById('espaco-exibir-pagina').innerHTML = '';
+    document.getElementById('espaco-exibir-lembrete').innerHTML = '';
+}
+
+function resetarSelecoes() {
+    limparOpcoes();
+
+    var selecao = document.getElementById('selecao');
+    selecao.selectedIndex = 0;
+
+    var selecao2 = document.getElementById('selecao2');
+    selecao2.selectedIndex = 0;
+
+    var selecao3 = document.getElementById('selecao3');
+    selecao3.selectedIndex = 0;
+}
+
+function limparOpcoes() {
+    var selecao = document.getElementById('selecao');
+    var selecao2 = document.getElementById('selecao2');
+    var selecao3 = document.getElementById('selecao3');
+
+    selecao.innerHTML = '';
+    selecao2.innerHTML = '';
+    selecao3.innerHTML = '';
+
+    adicionarOpcao(selecao, 'Selecione um Parâmetro');
+    adicionarOpcao(selecao2, 'Selecione uma Categoria');
+    adicionarOpcao(selecao3, 'Selecione um Exame');
+}
+
+function adicionarOpcao(selectElement, texto) {
+    var option = document.createElement('option');
+    option.value = texto;
+    option.text = texto;
+    selectElement.add(option);
+}
+
+function permitirEntradaTexto() {
+    document.querySelector('.search-box').focus();
+}
+
 function pesquisar() {
     var termoPesquisa = document.querySelector('.search-box').value.toLowerCase();
     var espacoExibirPagina = document.getElementById('espaco-exibir-pagina');
-    espacoExibirPagina.innerHTML = "";
+    espacoExibirPagina.innerHTML = '';
 
     if (termoPesquisa.trim().length < 3) {
         espacoExibirPagina.innerHTML = '<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">A pesquisa deve conter pelo menos 3 caracteres</p>';
@@ -19,11 +80,10 @@ function pesquisar() {
     Promise.all([
         carregarConteudoPagina('anemia-hemacias.html'),
         carregarConteudoPagina('eritrocitose-hemacias.html'),
-        carregarConteudoPagina('anemia-hemoglobina.html'),  
+        carregarConteudoPagina('anemia-hemoglobina.html'),
         carregarConteudoPagina('eritrocitose-hemoglobina.html'),
-        carregarConteudoPagina('anemia-hematocrito.html'),  
+        carregarConteudoPagina('anemia-hematocrito.html'),
         carregarConteudoPagina('eritrocitose-hematocrito.html')
-
     ]).then(resultados => {
         var resultadosEncontrados = [];
 
@@ -64,36 +124,33 @@ function pesquisar() {
                         resultadoElemento.style.marginRight = '8px';
 
                         resultadoElemento.addEventListener('click', function () {
+                            var espacoExibirLembrete = document.getElementById('espaco-exibir-lembrete');
+
                             var lembreteElemento = document.createElement('div');
-                            lembreteElemento.id = 'lembrete';
+                            lembreteElemento.classList.add('resultado-pagina', 'lembrete');
                             lembreteElemento.innerHTML = `
-                                <div id="fechar-lembrete" onclick="fecharLembrete()">Fechar (X)</div>
-                                <p id="lembrete-conteudo">${lembreteEncontrado}</p>
+                                <strong class="resultado-pagina-titulo">${termoExibido.toUpperCase()}</strong>
+                                <p class="resultado-pagina-justificativa">${lembreteEncontrado}</p>
                             `;
-                            espacoExibirPagina.appendChild(lembreteElemento);
 
-                            lembreteElemento.style.display = 'block';
-                            lembreteElemento.style.fontFamily = 'Arial, sans-serif';
-                            lembreteElemento.style.textAlign = 'center';
-                            lembreteElemento.style.backgroundColor = '#000000';
-                            lembreteElemento.style.color = '#fff';
-                            lembreteElemento.style.fontSize = '14px';
-                            lembreteElemento.style.padding = '20px';
-                            lembreteElemento.style.position = 'absolute';
-                            lembreteElemento.style.top = '50%';
-                            lembreteElemento.style.left = '50%';
-                            lembreteElemento.style.transform = 'translate(-50%, -50%)';
-                            lembreteElemento.style.borderRadius = '10px';
-                            lembreteElemento.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
-                            lembreteElemento.style.zIndex = '999';
-                            lembreteElemento.style.maxWidth = '400px';
+                            lembreteElemento.querySelector('.resultado-pagina-titulo').style.fontFamily = 'Arial, sans-serif';
+                            lembreteElemento.querySelector('.resultado-pagina-titulo').style.textAlign = 'left';
+                            lembreteElemento.querySelector('.resultado-pagina-titulo').style.color = '#000000';
+                            lembreteElemento.querySelector('.resultado-pagina-titulo').style.fontSize = '16px';
+                            lembreteElemento.querySelector('.resultado-pagina-titulo').style.marginLeft = '12px';
 
-                            var fecharLembreteElemento = document.getElementById('fechar-lembrete');
-                            if (fecharLembreteElemento) {
-                                fecharLembreteElemento.style.cursor = 'pointer';
-                            }
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.textAlign = 'left';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.backgroundColor = '#ffffff';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.borderRadius = '8px';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.padding = '12px';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginBottom = '12px';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.color = '#000000';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.fontSize = '16px';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginLeft = '8px';
+                            lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginRight = '8px';
 
-                            fecharLembreteElemento.addEventListener('click', fecharLembrete);
+                            espacoExibirLembrete.innerHTML = "";
+                            espacoExibirLembrete.appendChild(lembreteElemento);
                         });
                     }
                 }
@@ -110,17 +167,10 @@ function pesquisar() {
     });
 }
 
-function fecharLembrete() {
-    var lembreteElemento = document.getElementById('lembrete');
-    if (lembreteElemento) {
-        lembreteElemento.parentNode.removeChild(lembreteElemento);
-    }
-}
-
 function buscarSugestoes() {
     var termoPesquisa = document.querySelector('.search-box').value.toLowerCase();
     var espacoExibirSugestao = document.getElementById('espaco-exibir-sugestao');
-    espacoExibirSugestao.innerHTML = "";
+    espacoExibirSugestao.innerHTML = '';
 
     if (termoPesquisa.trim() === "") {
         return;
@@ -135,13 +185,11 @@ function buscarSugestoes() {
     Promise.all([
         carregarConteudoPagina('anemia-hemacias.html'),
         carregarConteudoPagina('eritrocitose-hemacias.html'),
-        carregarConteudoPagina('anemia-hemoglobina.html'),  
+        carregarConteudoPagina('anemia-hemoglobina.html'),
         carregarConteudoPagina('eritrocitose-hemoglobina.html'),
-        carregarConteudoPagina('anemia-hematocrito.html'),  
+        carregarConteudoPagina('anemia-hematocrito.html'),
         carregarConteudoPagina('eritrocitose-hematocrito.html')
-          
     ]).then(resultados => {
-
         resultados.forEach(html => {
             var div = document.createElement('div');
             div.innerHTML = html;
@@ -160,8 +208,8 @@ function buscarSugestoes() {
             });
         });
 
-        sugestoesEncontradas.sort(); 
-        
+        sugestoesEncontradas.sort();
+
         if (sugestoesEncontradas.length > 0) {
             sugestoesEncontradas.forEach(sugestao => {
                 var sugestaoElemento = document.createElement('p');
@@ -202,7 +250,6 @@ function buscarSugestoes() {
     });
 }
 
-
 document.querySelector('.search-box').addEventListener('input', function () {
     buscarSugestoes();
 });
@@ -211,7 +258,6 @@ function limparPesquisa() {
     document.querySelector('.search-box').value = '';
     document.getElementById('espaco-exibir-pagina').innerHTML = '';
     document.getElementById('espaco-exibir-sugestao').innerHTML = '';
-    
+
     window.location.href = window.location.origin + window.location.pathname;
 }
-

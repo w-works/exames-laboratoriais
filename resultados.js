@@ -1,12 +1,29 @@
-function exibirLembrete(causa, justificativa) {
-    var lembreteDiv = document.getElementById("lembrete");
-    var lembreteConteudo = document.getElementById("lembrete-conteudo");
+function exibirLembrete(titulo, justificativa) {
+    var espacoExibirLembrete = document.getElementById('espaco-exibir-lembrete');
 
-    lembreteConteudo.innerText = justificativa;
-    lembreteDiv.style.display = "block";
-}
+    var lembreteElemento = document.createElement('div');
+    lembreteElemento.classList.add('resultado-pagina', 'lembrete');
+    lembreteElemento.innerHTML = `
+        <strong class="resultado-pagina-titulo">${titulo.toUpperCase()}</strong>
+        <p class="resultado-pagina-justificativa">${justificativa}</p>
+    `;
 
-function fecharLembrete() {
-    var lembreteDiv = document.getElementById("lembrete");
-    lembreteDiv.style.display = "none";
+    lembreteElemento.querySelector('.resultado-pagina-titulo').style.fontFamily = 'Arial, sans-serif';
+    lembreteElemento.querySelector('.resultado-pagina-titulo').style.textAlign = 'left';
+    lembreteElemento.querySelector('.resultado-pagina-titulo').style.color = '#000000';
+    lembreteElemento.querySelector('.resultado-pagina-titulo').style.fontSize = '16px';
+    lembreteElemento.querySelector('.resultado-pagina-titulo').style.marginLeft = '12px';
+
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.textAlign = 'left';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.backgroundColor = '#ffffff';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.borderRadius = '8px';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.padding = '12px';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginBottom = '12px';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.color = '#000000';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.fontSize = '16px';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginLeft = '8px';
+    lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginRight = '8px';
+
+    espacoExibirLembrete.innerHTML = "";
+    espacoExibirLembrete.appendChild(lembreteElemento);
 }

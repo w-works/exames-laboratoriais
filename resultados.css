@@ -32,43 +32,17 @@ h2 {
     font-size: 16px;
 }
 
-#lembrete {
-    display: none;
-    background-color: #000000;
-    color: #fff;
-    font-size: 14px;
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    width: 400px;
-    max-width: 100%;
-    text-align: center;
-}
-
-#fechar-lembrete {
-    text-align: center;
+#lembretes {
+    text-align: left;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
     cursor: pointer;
-    padding: 10px; 
-    margin: 0 auto; 
-    width: fit-content;
-  }
-
-#fechar-lembrete:hover {
-    color: #fff;
+    color: #000000; 
+    font-size: 16px;
 }
 
-#espaco-exibir-pagina {
-    position: relative; 
-}
 
-#lembrete {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+
+
