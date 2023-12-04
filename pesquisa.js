@@ -62,7 +62,7 @@ function permitirEntradaTexto() {
 function pesquisar() {
     var termoPesquisa = document.querySelector('.search-box').value.toLowerCase();
     var espacoExibirPagina = document.getElementById('espaco-exibir-pagina');
-    espacoExibirPagina.innerHTML = '';
+    espacoExibirPagina.innerHTML = "";
 
     if (termoPesquisa.trim().length < 3) {
         espacoExibirPagina.innerHTML = '<p class="resultado" style="text-align: center; font-weight: bold; text-transform: uppercase; color: red; font-size: 14px;">A pesquisa deve conter pelo menos 3 caracteres</p>';
@@ -125,7 +125,6 @@ function pesquisar() {
 
                         resultadoElemento.addEventListener('click', function () {
                             var espacoExibirLembrete = document.getElementById('espaco-exibir-lembrete');
-
                             var lembreteElemento = document.createElement('div');
                             lembreteElemento.classList.add('resultado-pagina', 'lembrete');
                             lembreteElemento.innerHTML = `
@@ -144,10 +143,13 @@ function pesquisar() {
                             lembreteElemento.querySelector('.resultado-pagina-justificativa').style.borderRadius = '8px';
                             lembreteElemento.querySelector('.resultado-pagina-justificativa').style.padding = '12px';
                             lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginBottom = '12px';
+
                             lembreteElemento.querySelector('.resultado-pagina-justificativa').style.color = '#000000';
                             lembreteElemento.querySelector('.resultado-pagina-justificativa').style.fontSize = '16px';
                             lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginLeft = '8px';
                             lembreteElemento.querySelector('.resultado-pagina-justificativa').style.marginRight = '8px';
+
+                            lembreteElemento.style.marginTop = '15px';
 
                             espacoExibirLembrete.innerHTML = "";
                             espacoExibirLembrete.appendChild(lembreteElemento);
@@ -170,7 +172,7 @@ function pesquisar() {
 function buscarSugestoes() {
     var termoPesquisa = document.querySelector('.search-box').value.toLowerCase();
     var espacoExibirSugestao = document.getElementById('espaco-exibir-sugestao');
-    espacoExibirSugestao.innerHTML = '';
+    espacoExibirSugestao.innerHTML = "";
 
     if (termoPesquisa.trim() === "") {
         return;
@@ -208,7 +210,7 @@ function buscarSugestoes() {
             });
         });
 
-        sugestoesEncontradas.sort();
+        sugestoesEncontradas.sort(); 
 
         if (sugestoesEncontradas.length > 0) {
             sugestoesEncontradas.forEach(sugestao => {
